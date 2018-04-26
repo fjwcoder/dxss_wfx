@@ -1,0 +1,10 @@
+!.gitignore
+.vscode/
+
+
+
+
+*.zip
+*.rar
+*.bak
+*.log

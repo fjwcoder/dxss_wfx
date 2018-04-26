@@ -1,0 +1,17 @@
+!.gitignore
+.vscode/
+
+assets/
+attached/
+caches/
+ipdata/
+migrates/
+smslog/
+install.lock
+
+
+
+*.zip
+*.rar
+*.bak
+*.log

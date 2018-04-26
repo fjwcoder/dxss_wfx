@@ -1,0 +1,13 @@
+<style>
+	.goods-detail-nav-box{padding: 0!important;}
+	a.goods-detail-btn{margin: 0!important; border-radius: 0!important;}
+	.goods-detail-nav-box .filter-btn-a{width: 70px;}
+	#total_number{top: 0;}
+</style>
+<div class="filter-btn dis-box goods-detail-nav-box">
+	<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu"></i><em>客服</em></a>
+	<a href="{:url('flow/cart')}" class="filter-btn-flow filter-btn-a"><i class="iconfont icon-gouwuche"></i><sup class="b-color" id='total_number'><!--{if $seller_cart_total_number }-->{$seller_cart_total_number}<!--{else}-->0<!--{/if}--></sup><em>购物车</em></a>
+	
+	<a type="button" class="btn-cart box-flex goods-detail-btn" onClick="addToCart({$goods.goods_id});">加入购物车</a>
+	<a type="button" class="btn-submit box-flex goods-detail-btn" onClick="addToCart_quick({$goods.goods_id});">立即购买</a>
+</div>

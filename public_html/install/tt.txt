@@ -1,0 +1,1 @@
+INSERT INTO `ecs_admin_user` (user_name, password, ec_salt, email, add_time, last_ip, action_list,nav_list,agency_id) VALUES ('admin', 'ad733eb7460f158841dd37acf59c4c6d', '4530', 'wrw@qq.com', '1501560608', '127.0.0.1', 'all','',0)
