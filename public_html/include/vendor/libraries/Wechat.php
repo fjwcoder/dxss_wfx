@@ -226,7 +226,7 @@ class Wechat
 	public $logcallback;
 
 	public function __construct($options)
-	{	
+	{
 		$this->token = isset($options['token'])?$options['token']:'';
 		$this->encodingAesKey = isset($options['encodingaeskey'])?$options['encodingaeskey']:'';
 		$this->appid = isset($options['appid'])?$options['appid']:'';

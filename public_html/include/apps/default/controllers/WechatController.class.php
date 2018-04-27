@@ -39,11 +39,8 @@ class WechatController extends CommonController
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
-            // Wechat类为   public_html/include/vendor/Wechat.class.php
-            // 该类继承了  public_html/include/vendor/WechatAbstract.class.php
-            $this->weObj = new Wechat($config); 
+            $this->weObj = new Wechat($config);
             $this->weObj->valid();
-            
             $this->wechat_id = $wxinfo['id'];
         }
     }
@@ -57,6 +54,7 @@ class WechatController extends CommonController
         // 事件类型
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
+        
         $keywords = '';
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
@@ -148,9 +146,11 @@ class WechatController extends CommonController
      */
     private function subscribe($openid = '', $scene_id = 0)
     {
+
         if(!empty($openid)){
-            // 用户信息: 获取微信的用户信息
+            // 用户信息
             $info = $this->weObj->getUserInfo($openid);
+            // file_put_contents('/www/web/fjw1.txt', var_export($info, true));
             if (empty($info)) {
                 $info = array();
             }
@@ -236,6 +236,7 @@ class WechatController extends CommonController
                 $data['subscribe_time'] = $info['subscribe_time'];
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
+
                 $this->model->table('wechat_user')->data($data)->insert();
                 // 红包信息
                 $content = $this->send_message($openid, 'bonus', $this->weObj, 1);

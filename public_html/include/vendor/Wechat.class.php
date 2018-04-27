@@ -2,8 +2,7 @@
 class Wechat extends WechatAbstract {
 
     public function __construct($options){
-		
-		parent::__construct($options);
+        parent::__construct($options);
         $options = array('temp' => ROOT_PATH .'data/caches/access_token');
         $this->cache = new Cache($options);
     }

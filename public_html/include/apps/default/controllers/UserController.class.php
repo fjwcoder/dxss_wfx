@@ -140,7 +140,7 @@ class UserController extends CommonController {
             default: $profile['sex'] = '未知';
             break;
         }
-// var_export($profile); die;
+
         $this->assign('profile', $profile);
 
         // 增加是否是微信客户端的判断
@@ -162,28 +162,15 @@ class UserController extends CommonController {
         
     }
     public function edit_sex(){
-        $pro_sex = isset($_POST['sex']) ? in($_POST['sex']) : null;
-        if($pro_sex === null || $pro_sex == '未知' || $pro_sex == ''){
+        $sex = isset($_POST['sex']) ? in($_POST['sex']) : null;
+        if($sex === null){
             echo json_encode(array('status'=>false, 'content'=>'性别数据错误')); exit();
         }
-
-        switch($pro_sex){
-            case '男': 
-                $sex = 1;
-            break;
-            case '女': 
-                $sex = 2;
-            break;
-            default: $sex = 0;
-            break;
-            
-        }
-
-        $sql = "UPDATE ".$this->model->pre."wechat_user set sex=".$sex." where ect_uid=".$this->user_id;
+        $sql = "UPDATE ".$this->model->pre."wechat_user set sex='".$sex."' where ect_uid=".$this->user_id;
         $result = $this->model->query($sql);
-        $sql = "UPDATE ".$this->model->pre."users set sex=".$sex." where user_id=".$this->user_id;
+        $sql = "UPDATE ".$this->model->pre."users set sex='".$sex."' where user_id=".$this->user_id;
         $result = $this->model->query($sql);
-        echo json_encode(array('status'=>true, 'content'=>'更新成功', 'sex'=>$pro_sex));
+        echo json_encode(array('status'=>true, 'sex'=>$sex));
     }
 
     public function edit_birthday(){

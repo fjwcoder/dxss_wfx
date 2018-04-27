@@ -349,7 +349,6 @@ class passport
      */
     public function get_profile_by_id($id)
     {
-        return array('name'=>'fjw');
         $sql = "SELECT " . $this->field_id . " AS user_id," . $this->field_name . " AS user_name," . $this->field_email . " AS email," . $this->field_mobile . " AS mobile," . $this->field_gender . " AS sex," . $this->field_bday . " AS birthday," . $this->field_reg_date . " AS reg_time, " . $this->field_passwd_question . " AS passwd_question," . $this->field_pass . " AS password " . " FROM {pre}" . $this->user_table . " WHERE " . $this->field_id . "='$id'";
         $row = $this->db->queryRow($sql);
         

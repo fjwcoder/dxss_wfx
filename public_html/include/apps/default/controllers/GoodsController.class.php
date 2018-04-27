@@ -36,19 +36,18 @@ class GoodsController extends CommonController
     {
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
+        //购物车商品数量
+        $cart_goods = insert_cart_info_number();
+        $this->assign('seller_cart_total_number', $cart_goods);
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
         } else {
-            //购物车商品数量 modify by fjw in 18.4.26: 把查询购物车商品数量放到里边
-            $cart_goods = insert_cart_info_number();
-            $this->assign('seller_cart_total_number', $cart_goods);
-
             if ($goods ['brand_id'] > 0) {
-                $goods ['goods_brand_url'] = url('brand/index', array('id' => $goods ['brand_id'])); // 品牌图片？？？
+                $goods ['goods_brand_url'] = url('brand/index', array('id' => $goods ['brand_id']));
             }
             $shop_price = $goods ['shop_price'];
-            $linked_goods = model('Goods')->get_related_goods($this->goods_id); // 注释 by fjw in 18.4.26: 关联商品
+            $linked_goods = model('Goods')->get_related_goods($this->goods_id);
             $goods ['goods_style_name'] = add_style($goods ['goods_name'], $goods ['goods_name_style']);
 
             // 购买该商品可以得到多少钱的红包
@@ -62,7 +61,7 @@ class GoodsController extends CommonController
                     $goods ['bonus_money'] = price_format($goods ['bonus_money']);
                 }
             }
-            $comments = model('Comment')->get_comment_info($this->goods_id, 0); // 等待注释 by fjw in 18.4.26：不用显示商品评论
+            $comments = model('Comment')->get_comment_info($this->goods_id, 0);
 		
             $this->assign('goods', $goods);
             $this->assign('comments', $comments);
@@ -85,10 +84,7 @@ class GoodsController extends CommonController
             // 会员等级价格
             $this->assign('rank_prices', model('Goods')->get_user_rank_prices($this->goods_id, $shop_price));
             // 商品相册
-            // $pic__fjw = model('GoodsBase')->get_goods_gallery($this->goods_id);
-            // var_export($pic__fjw); die;
             $this->assign('pictures', model('GoodsBase')->get_goods_gallery($this->goods_id));
-            
             // 获取关联礼包
             $package_goods_list = model('Goods')->get_package_goods_list($goods ['goods_id']);
             $this->assign('package_goods_list', $package_goods_list);
