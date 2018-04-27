@@ -1,7 +1,9 @@
 <style>
 	.goods-detail-nav-box{padding: 0!important;}
 	a.goods-detail-btn{margin: 0!important; border-radius: 0!important;}
-	.goods-detail-nav-box .filter-btn-a{width: 70px;}
+	.goods-detail-nav-box .filter-btn-kefu{width: 60px;}
+	.goods-detail-nav-box .filter-btn-flow{width: 60px; padding-left: 0; padding-right: 20px;}
+	.goods-detail-nav-box .filter-btn-flow sup{right: 2rem!important;}
 	#total_number{top: 0;}
 </style>
 <div class="filter-btn dis-box goods-detail-nav-box">
