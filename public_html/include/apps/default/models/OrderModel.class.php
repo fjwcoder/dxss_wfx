@@ -915,7 +915,7 @@ class OrderModel extends BaseModel {
      * @access  public
      * @return  array
      */
-    function get_cart_goods() {
+    function get_cart_goods($uid=0) {
         /* 初始化 */
         $goods_list = array();
         $total = array(
@@ -927,11 +927,20 @@ class OrderModel extends BaseModel {
             'total_number' => 0,
         );
         /* 循环、统计 */
-        $sql = "SELECT *, IF(parent_id, parent_id, goods_id) AS pid " .
+        // modify by fjw in 18.5.3: 特么的能不能不用SESS_ID了！！！
+        if($uid === 0){
+            $sql = "SELECT *, IF(parent_id, parent_id, goods_id) AS pid " .
             " FROM " . $this->pre . "cart " .
             " WHERE session_id='".SESS_ID."' AND rec_type = '" . CART_GENERAL_GOODS . "'" .
             " ORDER BY pid, parent_id";
+        }else{
+            $sql = "SELECT *, IF(parent_id, parent_id, goods_id) AS pid " .
+            " FROM " . $this->pre . "cart " .
+            " WHERE user_id='".$uid."' AND rec_type = '" . CART_GENERAL_GOODS . "'" ;
+            //." ORDER BY pid, parent_id";
+        }
         $res = $this->query($sql);
+
         /* 用于统计购物车中实体商品和虚拟商品的个数 */
         $virtual_goods_count = 0;
         $real_goods_count = 0;

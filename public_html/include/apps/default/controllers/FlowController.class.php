@@ -16,7 +16,26 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 
 class FlowController extends CommonController {
-
+    protected $user_id;
+    protected $action;
+    protected $back_act = '';
+    /**
+     * 构造函数
+     */
+    public function __construct() {
+        parent::__construct();
+        // 属性赋值
+        $this->user_id = $_SESSION['user_id'];
+        $this->action = ACTION_NAME;
+        // // 验证登录
+        // $this->check_login();
+        // // 用户信息
+        // $info = model('ClipsBase')->get_user_default($this->user_id);
+        // // 如果是显示页面，对页面进行相应赋值
+        // assign_template();
+        // $this->assign('action', $this->action);
+        // $this->assign('info', $info);
+    }
     /**
      * 购物车列表
      */
@@ -28,7 +47,8 @@ class FlowController extends CommonController {
         }
 
         // 取得商品列表，计算合计
-        $cart_goods = model('Order')->get_cart_goods();
+        $cart_goods = model('Order')->get_cart_goods($this->user_id);
+
         $this->assign('goods_list', $cart_goods ['goods_list']);
         $this->assign('total', $cart_goods ['total']);
 
@@ -346,7 +366,7 @@ class FlowController extends CommonController {
             $result ['total_desc'] = '';
             $result ['cart_info'] = insert_cart_info();
             /* 计算合计 */
-            $cart_goods = model('Order')->get_cart_goods();
+            $cart_goods = model('Order')->get_cart_goods($this->user_id);
             foreach ($cart_goods ['goods_list'] as $goods) {
                 if ($goods ['rec_id'] == $key) {
                     $result ['goods_subtotal'] = $goods ['subtotal'];
@@ -978,7 +998,7 @@ class FlowController extends CommonController {
         }
         /* 如果使用库存，且下订单时减库存，则减少库存 */
         if (C('use_storage') == '1' && C('stock_dec_time') == SDT_PLACE) {
-            $cart_goods_stock = model('Order')->get_cart_goods();
+            $cart_goods_stock = model('Order')->get_cart_goods($this->user_id);
             $_cart_goods_stock = array();
             foreach ($cart_goods_stock ['goods_list'] as $value) {
                 $_cart_goods_stock [$value ['rec_id']] = $value ['goods_number'];

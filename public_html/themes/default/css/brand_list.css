@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-@charset "utf-8";
-body{position: relative;}
-.ect-bg{background-color:#E9ECEE !important;}
-.ect-bg a{color:#555;background-position: -5.4em 0 !important;}
-.ect-bg span{color:#555;}
-.bran_list img{width:30% !important;heigth:auto;}
-.bran_list li{margin:0 !important;padding:0.5rem 0;border-bottom:1px #e3e3e3 solid;background-color: #FFFFFF;}
-.bran_list{background-color:#F3F5F7;padding: 0;}
-.group-logo img{width:100%;height:auto;}
-.group-logo ul li{background-color: #fff;float:left;width:33.3%;padding:1rem 0;text-align:center;}
-.group-logo ul li p{font-weight:bold;font-size:2.5rem;}
-.clear{clear:both;}
-.brand-status{background-color: #F3F5F7 !important; padding-left:1rem !important;}
-
-.ect-brand-list-nav li a{padding:0.2rem 0.1rem; text-align:center; }
-.ect-brand-list-nav li a:hover{background:none; padding:0.2rem 0.1rem;}
-.ect-brand-list-nav li.active a{color:#1CBB7F;}
-=======
 @charset "utf-8";
 body{position: relative;}
 .ect-bg{background-color:#E9ECEE !important;}
@@ -34,4 +15,3 @@ body{position: relative;}
 .ect-brand-list-nav li a{padding:0.2rem 0.1rem; text-align:center; }
 .ect-brand-list-nav li a:hover{background:none; padding:0.2rem 0.1rem;}
 .ect-brand-list-nav li.active a{color:#ec5151;}
->>>>>>> 81068c63c712f63d925e3854a80b9bf5f829b078

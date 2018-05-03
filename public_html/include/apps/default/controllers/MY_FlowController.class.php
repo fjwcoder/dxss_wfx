@@ -17,6 +17,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class MY_FlowController extends FlowController {
 
+
     /**
      *  提交订单
      */
@@ -31,7 +32,8 @@ class MY_FlowController extends FlowController {
         }
         /* 如果使用库存，且下订单时减库存，则减少库存 */
         if (C('use_storage') == '1' && C('stock_dec_time') == SDT_PLACE) {
-            $cart_goods_stock = model('Order')->get_cart_goods();
+            $user_id = $_SESSION['user_id'];
+            $cart_goods_stock = model('Order')->get_cart_goods($user_id);
             $_cart_goods_stock = array();
             foreach ($cart_goods_stock ['goods_list'] as $value) {
                 $_cart_goods_stock [$value ['rec_id']] = $value ['goods_number'];
