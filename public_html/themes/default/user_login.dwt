@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
  <form name="formLogin" action="{:url('user/login')}" method="post" class="validforms">
  <div class="flow-consignee ect-bg-colorf">
@@ -49,3 +50,84 @@
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>{$page_title}</title>
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css"> -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{$ecs_css_path}">
+<link rel="stylesheet" href="__TPL__/css/user.css">
+<link rel="stylesheet" href="__TPL__/css/photoswipe.css">
+<style>
+    .head-img-url{height: 8rem; border-radius: 50%; margin-left: 40%; margin-top: 5%;}
+    .flow-consignee{width: 90%; margin-left: 5%; border: 1px solid #e3e3e3;}
+    .input-text span{left: 3.2rem;}
+    .ect-padding-tb{padding: 2rem 0;}
+    .fa{color: #bebebe;}
+    .wx-qrcode{width: 60%; }
+  </style>
+</head>
+<body>
+<div class="con">
+  <img class="head-img-url" src="/data/fjwimg/default_headimgurl.png">
+ <form name="formLogin" action="{:url('user/login')}" method="post" class="validforms">
+ <div class="flow-consignee ect-bg-colorf">
+     <section>
+      <ul>
+        <li>
+          <div class="input-text">
+            <b><i class="fa fa-user fa-fw fa-lg"></i></b>
+            <span>
+              <input placeholder="{$lang.username}/{$lang.mobile}/{$lang.email}" name="username" type="text"  class="inputBg" id="username" datatype="*" >
+            </span>
+          </div>
+        </li>
+        <li>
+          <div class="input-text"><b><i class="fa fa-lock fa-fw fa-lg"></i></b>
+            <span><input placeholder="{$lang.label_password}"  name="password" type="password" class="inputBg" datatype="*6-16" /></span></div>
+        </li>
+        
+        <!-- 判断是否启用验证码{if $enabled_captcha} -->
+        <li>
+            <div class="input-text code"><b>{$lang.comment_captcha}</b><span>
+            <input name="captcha" type="text" placeholder="{$lang.comment_captcha}">
+            </span><img src="{:url('Public/captcha', array('rand'=>$this->_var['rand']))}" alt="captcha" class="img-yzm pull-right" onClick="this.src='{:url('public/captcha')}&t='+Math.random()" /></div>
+        </li>
+        <!--{/if}-->
+      </ul>
+    </section>
+  </div>
+
+  <!-- 注释 by fjw in 18.5.3 <p class="ect-checkbox ect-padding-tb ect-margin-tb ect-margin-bottom0 ect-padding-lr">
+     <input type="checkbox" value="1" name="remember" id="remember" class="l-checkbox" />
+     <label for="remember">{$lang.remember}<i></i></label>
+      
+     {if $anonymous_buy eq 1 && $step eq 'flow'} 是否允许未登录用户购物
+      <a href="{:url('flow/consignee',array('direct_shopping'=>1))}" style="float:right;">{$lang.direct_shopping}</a>
+      {/if}
+  </p> -->
+   <input type="hidden" name="back_act" value="{$back_act}" />
+  <div class="ect-padding-lr ect-padding-tb"> 
+  <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="{$lang.now_landing}" />
+  </div>
+  </form>
+  <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both">
+	<a href="{:url('user/get_password_phone')}">{$lang.forgot_password}</a>  
+	<a href="{:url('user/register')}">{$lang.free_registered}</a>
+  </p>
+  <div class="ect-padding-lr ect-margin-tb user-hezuo" style="text-align: center; margin-top: 2rem;">
+    <img class="wx-qrcode" src="{$wx_qrcode}"/>
+    <p style="font-size: 2rem;">扫描二维码关注公众号，轻松购物</p>
+  </div>
+  </div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>
+>>>>>>> 81068c63c712f63d925e3854a80b9bf5f829b078
