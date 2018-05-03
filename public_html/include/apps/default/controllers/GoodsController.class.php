@@ -36,6 +36,7 @@ class GoodsController extends CommonController
     {
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
+        $goods['shop_price_formated'] = '¥'.$goods['shop_price'].'元';
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
@@ -144,6 +145,7 @@ class GoodsController extends CommonController
         $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
+
         $this->display('goods.dwt');
     }
 

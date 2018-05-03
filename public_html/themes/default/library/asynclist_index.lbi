@@ -7,7 +7,11 @@
 {/if}
   <a href="{$goods.url}"><img src="{$goods.goods_img}" alt="{$goods.name}" /></a>
   <a href="{$goods.url}"><p>{$goods.name}</p></a>
-  <span><!--{if $goods.promote_price}-->{$goods.promote_price}<!--{else}-->{$goods.shop_price}<!--{/if}--></span>
+  <span >
+    ¥
+    <!--{if $goods.promote_price}-->{$goods.promote_price}<!--{else}-->{$goods.shop_price}<!--{/if}-->
+    元
+  </span>
 </li>
 <!-- {/if}--> 
 <!-- 商品列表 end--> 

@@ -106,9 +106,9 @@
 			</style>
 			<div class="member-item">
 				
-				<a><div class="member-item-list">我的推广</div></a>
-				<a><div class="member-item-list">收货地址</div></a>
-				<a><div class="member-item-list">用户信息</div></a>
+				<a onclick="window.location = '{:url('user/share')}'"><div class="member-item-list">我的推广</div></a>
+				<a onclick="window.location = '{:url('user/address_list')}'"><div class="member-item-list">收货地址</div></a>
+				<a onclick="window.location = '{:url('user/profile')}'"><div class="member-item-list">用户信息</div></a>
 				<a><div class="member-item-list">签到积分</div></a>
 				<a><div class="member-item-list">打包购</div></a>
 				<a><div class="member-item-list">我的微店</div></a>
@@ -141,7 +141,7 @@
 							<li class="fl">
 								<a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><img src="{$val.goods_thumb}" /></a>
 								<p>{$val.goods_name}</p>
-								<span style="font-size: 0.9375rem;">{$lang.sort_price}：{$val.shop_price}</span>
+								<span style="font-size: 0.9375rem;">{$val.shop_price}</span>
 							</li>
 							<!-- {/foreach} -->
 						</ul>

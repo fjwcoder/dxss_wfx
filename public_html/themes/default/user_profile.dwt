@@ -5,7 +5,7 @@
     .slide-window-left{height: 100%; width: 20%; opacity: 0.5; background: black; float: left;}
     .slide-window-content{height: 100%; width: 80%; background: #fff;; float: right;}
     .slide-window-title{height: 2.6em; line-height: 2.6em; font-size: 20px; text-align: center; margin-bottom: 2rem;
-      border-bottom: 1px solid #1CBB7F;}
+      border-bottom: 1px solid #ec5151;}
     .slide-window input{border: none; height: 60%; border-bottom: 1px solid #e0e0e0; padding: 0;}
     .slide-window .btn{height: 40px!important; margin-top: 5rem;}
     .content-item{text-align: center; height: 4rem; line-height: 4rem; font-size: 16px;}
@@ -15,7 +15,7 @@
     .margin-top-block{margin-top: 0.5rem;}
     .profile-item i{float: right; margin-top: 1.3rem;}
     .profile-item span{float: right; width: 60%; font-size: 1.7rem; height: 80%;  border: none; text-align: right; margin-right: 1rem;}
-    .profile-item labal{font-size: 1.9rem;}
+    .profile-item labal{font-size: 15px;}
     .profile-item-headimg img.headimgurl{float: left; height: 6rem; margin-top: 0.5rem; border-radius: 50%; border: 1px solid #e0e0e0;}
     .profile-item .headimgurl-nickname{font-size: 22px; text-align: left; margin-left: 2rem; float: left; line-height: 6rem;}
     .male-color{color: #0ff;}

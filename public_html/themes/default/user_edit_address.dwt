@@ -1,4 +1,16 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+<style>
+  body{overflow: hidden;}
+    /* 滑动块的样式 */
+    .slide-window{ position: absolute; top: 0; right: -105%; z-index: 11; display: block; height: 100%; width: 100%; }
+    .slide-window-left{height: 100%; width: 20%; opacity: 0.5; background: black; float: left;}
+    .slide-window-content{height: 100%; width: 80%; background: #fff;; float: right;}
+    .slide-window-title{height: 2.6em; line-height: 2.6em; font-size: 20px; text-align: center; margin-bottom: 2rem;
+      border-bottom: 1px solid #ec5151;}
+    .slide-window input{border: none; height: 60%; border-bottom: 1px solid #e0e0e0; padding: 0;}
+    .slide-window .btn{height: 40px!important; margin-top: 5rem;}
+    .content-item{text-align: center; height: 4rem; line-height: 4rem; font-size: 16px;}
+</style>
 <form action="{:url('user/edit_address')}" method="post" name="theForm" onsubmit="return checkConsignee(this)">
   <div class="ect-bg-colorf flow-consignee">
     <ul>
@@ -56,6 +68,17 @@
       <li class="input-text"><b class="pull-left">{$lang.detailed_address}：</b>
         <textarea name="address" placeholder="{$lang.detailed_address}{$lang.require_field}" type="text" >{$consignee.address|escape}</textarea>
       </li>
+
+      <li onclick="slideshow('station');">
+          <div class="input-text"><b class="pull-left">顶鲜驿站：</b><span>
+          <div style="text-align: right; padding-right: 5%;" >
+            <input type="hidden" name="station_id" value="{$station.id}">
+            <span id="station-name" style="right: 2em;">{$station.name}</span>
+            <i class="fa fa-angle-right fa-lg"></i>
+          </div>
+        </div>
+      </li>
+
     </ul>
   </div>
   <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center"> <a class="btn btn-info ect-colorf" href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" >{$lang.drop}</a>
@@ -64,6 +87,20 @@
   </div>
 </form>
 </div>
+
+<style>
+    .slide-station{font-size: 1.5rem; padding: 5px 5px; border: 1px solid #e0e0e0; margin: 5px 5px;}
+  
+  </style>
+  <div class="slide-window edit-station-window">
+      <div class="slide-window-left" onclick="unslideshow('station');"></div>
+      <div class="slide-window-content">
+        <div class="slide-window-title"> 选择驿站</div>
+        <div class="slide-window-info">
+          加载中……
+        </div>
+      </div>
+    </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__PUBLIC__/script/region.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script> 
@@ -81,5 +118,61 @@
             }
           }
           {/literal}
+
+var station_id = '{$station.id}';
+var area_id = $("select[name='district']").val();
+var htmls = "";
+$.post("{:url('user/ajax_get_station')}",{area_id:area_id},function(data){
+    if(data.status){    
+      $.each(data.station,function(index,value){
+          htmls += "<div onclick='chosestation("+value.id+");' id='station-"+value.id+"' sname='"+value.name+"' class='slide-station'>"+value.name+":<small>"+value.address+"</small></div>";
+        });
+      $('.slide-window-info').html(htmls);
+    }else{
+      alert('该区域暂无可用驿站');
+    }
+
+  },"json");
+
+
+  function slideshow(type){
+    if(type==="station"){
+      var area_id = $("select[name='district']").val();
+      if(area_id == 0){
+        alert('请选择收货地址');
+        return false;
+      }
+      var html = '';
+      $.post("{:url('user/ajax_get_station')}",{area_id:area_id},function(data){
+        if(data.status){    
+          $.each(data.station,function(index,value){
+              html += "<div onclick='chosestation("+value.id+");' id='station-"+value.id+"' sname='"+value.name+"' class='slide-station'>"+value.name+":<small>"+value.address+"</small></div>";
+            });
+          $('.slide-window-info').html(html);
+        }else{
+          alert('该区域暂无可用驿站');
+        }
+
+      },"json");
+      $('.edit-station-window').css({'display':'block'});
+      $(".edit-station-window").animate({right:'0'});
+    }
+  }
+
+  function chosestation(id){
+    var name = $('#station-'+id).attr('sname');
+    $('input[name="station_id"]').val(id);
+    $('#station-name').html(name);
+    unslideshow('station');
+  }
+
+
+  function unslideshow(type){
+    if(type==="station"){
+      $(".edit-station-window").animate({right:'-105%'}, function(){
+        $('.edit-station-window').css({'display':'none'});
+      });
+    }
+  }
 </script>
 </body></html>

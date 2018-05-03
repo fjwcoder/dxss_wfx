@@ -1090,7 +1090,8 @@ class UserController extends CommonController {
                 'district' => I('post.district', 0, 'intval'),
                 'address' => I('post.address'),
                 'consignee' => I('post.consignee'),
-                'mobile' => I('post.mobile')
+                'mobile' => I('post.mobile'),
+                'station_id' =>I('post.station_id')
             );
 
             if (model('Users')->update_address($address)) {
@@ -1114,6 +1115,44 @@ class UserController extends CommonController {
         $this->display('user_add_address.dwt');
     }
 
+    // 添加收货地址，选择驿站
+    public function ajax_get_station(){
+        $area_id = I('post.area_id', 0, 'intval');
+        $station = $this->get_area_station($area_id);
+        if($station != false){
+            echo json_encode(array('status'=>true, 'station'=>$station));
+        }else{
+            echo json_encode(array('status'=>$station));
+        }
+        
+    }
+
+    public function get_area_station($id){
+        if($id === 0){
+            return false;
+        }
+        $sql = "SELECT * FROM ".$this->model->pre."station where area_id=".$id." and status=1 and is_station=1";
+        $station = $this->model->query($sql);
+        if(!empty($station)){
+            return $station;
+        }else{
+            return false;
+        }
+        
+    }
+
+    public function get_addr_station($id){
+        if($id === 0){
+            return false;
+        }
+        $sql = "SELECT * FROM ".$this->model->pre."station where id=".$id." and status=1 and is_station=1";
+        $station = $this->model->query($sql);
+        if(!empty($station)){
+            return $station[0];
+        }else{
+            return false;
+        }
+    }
     /**
      * 编辑收货地址的处理
      */
@@ -1129,7 +1168,8 @@ class UserController extends CommonController {
                 'district' => I('post.district', 0, 'intval'),
                 'address' => I('post.address'),
                 'consignee' => I('post.consignee'),
-                'mobile' => I('post.mobile')
+                'mobile' => I('post.mobile'),
+                'station_id' =>I('post.station_id')
             );
 
             if (model('Users')->update_address($address)) {
@@ -1142,6 +1182,8 @@ class UserController extends CommonController {
 
         // 获得用户对应收货人信息
         $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
+        $station = $this->get_addr_station($consignee['station_id']);
+
         $province_list = model('RegionBase')->get_regions(1, $consignee['country']);
         $city_list = model('RegionBase')->get_regions(2, $consignee['province']);
         $district_list = model('RegionBase')->get_regions(3, $consignee['city']);
@@ -1153,7 +1195,7 @@ class UserController extends CommonController {
         $this->assign('province_list', $province_list);
         $this->assign('city_list', $city_list);
         $this->assign('district_list', $district_list);
-
+        $this->assign('station', $station);
         $this->display('user_edit_address.dwt');
     }
 
@@ -1746,6 +1788,7 @@ class UserController extends CommonController {
      * 登录
      */
     public function login() {
+
         // 登录处理
         if (IS_POST) {
             $username = I('post.username');
@@ -1828,7 +1871,8 @@ class UserController extends CommonController {
         if(is_wechat_browser()){
             $this->assign('oauth_url', url('user/index', array('flag'=>'oauth')));
         }
-		
+
+		$this->assign('wx_qrcode', '/data/fjwimg/wx_qrcode.jpg');
         $this->assign('title', L('login'));
         $this->assign('step', I('get.step'));
         $this->assign('anonymous_buy', C('anonymous_buy'));

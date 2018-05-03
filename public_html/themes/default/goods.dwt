@@ -1,11 +1,30 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
 <div class="con">
-	<!--style="margin-bottom: 50px;"-->
-	<div class="goods">
-		<div class="ect-bg">
+	<style>
+		.tb-lr-center img{
+			/* max-width: 414px;
+			max-height: 414px; */
+			width: auto;  
+			height: auto;  
+			max-width: 100%;  
+			max-height: 100%; 
+		}
+		.btn-cart{background: inherit; border: 0; color: #000!important;}
+	</style>
+	<div class="goods etc-tab j-ect-tab"><!-- 整体 -->
+		
+		<div class="ect-bg "><!-- 头部 -->
 			<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
-				<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span>
+				<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
+				<span class="j-tab-title tab-title">
+					商品信息
+					<!-- <ul class="dis-box">
+						<li class="box-flex active">商品</li>
+						<li class="box-flex">详情</li>
+						<li class="box-flex">菜谱</li>
+					</ul> -->
+				</span>
 				<a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
 			</header>
 			<nav class="ect-nav ect-nav-list" style="display:none;">
@@ -14,23 +33,10 @@
 			</nav>
 		</div>
 
-		<!--商品图片相册-->
-		<div class="goods-photo j-show-goods-img">
-			<div class="hd">
-				<ul>
-				</ul>
-			</div>
-			<style>
-
-				.tb-lr-center img{
-					/* max-width: 414px;
-					max-height: 414px; */
-					width: auto;  
-					height: auto;  
-					max-width: 100%;  
-					max-height: 100%; 
-				}
-			</style>
+<div id="j-tab-con" class="tab-con" style="width: 100%;">
+		<!-- 1.商品信息页 start -->
+		<div class="goods-photo j-show-goods-img"><!--商品图片相册-->
+			<div class="hd"><ul></ul></div>
 			<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
 			<ul class="swiper-wrapper">
 				<li class="swiper-slide tb-lr-center"><img src="{$goods.original_img}" alt="{$goods.goods_name}" /></li>
@@ -66,9 +72,6 @@
 				{$goods.shop_price_formated}
 				<!--{/if}--></span>
 					<!-- <em class="em-promotion">5.8折</em></p> -->
-				<p class="p-market">
-					市场价<del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del>
-				</p>
 				<p class=" dis-box g-p-tthree m-top06">
 					<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
 					<span class="box-flex text-right">库存 {$goods.goods_number}</span>
@@ -102,11 +105,6 @@
 			<!--商品评价-->
 
 			<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
-				<section class="goods-more-a">
-					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
-      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
-				</section>
-
 				<section class="m-top1px padding-all b-color-f goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
@@ -194,22 +192,7 @@
 				</div>
 				<!--{/if}-->
 				<!--{/foreach}-->
-				<!--<div class="of-hidden evaluation-list">
-					<div class="of-hidden ">
-						<p class="fl"><span class="grade-star g-star-5 fl"></span><em class="t-remark fl">s****y</em></p>
-						<p class="fr t-remark">2015-08-09 10:46:43</p>
-					</div>
-					<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
-					<p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
-					<div class="ect-button-more m-top10 dis-box">
-						<a class="box-flex btn-default">有图评价</a>
-						<a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}" class="box-flex btn-default">全部评价</a>
-					</div>
-				</div>-->
 			</div>
-		</section>
-		<section class="padding-all text-center t-remark2 ">
-			<a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}" class="j-goodsinfo-div">点击查看商品详情</a>
 		</section>
 
 		</form>
@@ -225,7 +208,6 @@
 			document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
 			document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
 		}
-
 		function closeDiv() {
 			document.getElementById('popDiv').style.display = 'none';
 			document.getElementById('hidDiv').style.display = 'none';
@@ -236,6 +218,23 @@
 	<!--加入购物车弹出层 E-->
 
 </div>
+<!-- 商品信息页 END -->
+<!-- 商品详情页 START -->
+
+<section class="padding-all text-center t-remark2 ">
+	<a href="javascript:void(0);" class="j-goodsinfo-div">商品详情</a>
+</section>
+<div class="goods_desc">
+		{$goods.goods_desc}
+</div>
+
+
+
+<!-- 商品详情页 end -->
+
+
+
+
 <!-- #BeginLibraryItem "/library/new_page_footer_nav.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/search.lbi" -->
@@ -246,6 +245,7 @@
 </div>
 
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
+
 <script type="text/javascript">
 	/*点击下拉菜单*/
 	function openMune() {
@@ -321,7 +321,7 @@ $(function() {
 </script>
 <script>
 	$(function($) {
-	
+		
 		var handler = function(e) { //禁止浏览器默认行为
 			e.preventDefault();
 		};
@@ -349,8 +349,14 @@ $(function() {
 				document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
 			}
 		});
+
+		// add by fjw in 18.5.3
+		var desc_width = document.body.offsetWidth;
+		$('.goods_desc').css({'width': desc_width+'px'});
+		$('.goods_desc p img').css({'width': desc_width+'px'});
 	});
 </script>
+
 </body>
 
 </html>

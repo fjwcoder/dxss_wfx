@@ -1,16 +1,4 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<style>
-    body{overflow: hidden;}
-    /* 滑动块的样式 */
-    .slide-window{ position: absolute; top: 0; right: -105%; z-index: 11; display: block; height: 100%; width: 100%; }
-    .slide-window-left{height: 100%; width: 20%; opacity: 0.5; background: black; float: left;}
-    .slide-window-content{height: 100%; width: 80%; background: #fff;; float: right;}
-    .slide-window-title{height: 2.6em; line-height: 2.6em; font-size: 20px; text-align: center; margin-bottom: 2rem;
-      border-bottom: 1px solid #ec5151;}
-    .slide-window input{border: none; height: 60%; border-bottom: 1px solid #e0e0e0; padding: 0;}
-    .slide-window .btn{height: 40px!important; margin-top: 5rem;}
-    .content-item{text-align: center; height: 4rem; line-height: 4rem; font-size: 16px;}
-</style>
 <form action="{:url('user/add_address')}" method="post" name="theForm" onsubmit="return checkConsignee(this)">
   <div class="ect-bg-colorf flow-consignee">
     <ul class="o-info">
@@ -24,7 +12,6 @@
           <input placeholder="{$lang.mobile}{$lang.require_field}" name="mobile" type="text" class="inputBg_touch" value="{$consignee.mobile|escape}" />
           </span></div>
       </li>
-      <!-- 选择地区：中国 -->
       <li style="display:none">
         <div class="input-text"><b class="pull-left">{$lang.city_district}：</b><span>
         <select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
@@ -37,8 +24,8 @@
     </li>
     <li>
         <div class="input-text"><b class="pull-left">省/直辖市：</b><span>
-        <select name="province" class="address-select" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
-          <option value="0">选择省</option>
+        <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
+          <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
           <!-- {foreach from=$province_list item=province} -->
           <option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
           <!-- {/foreach} -->
@@ -47,12 +34,13 @@
     </li>
     <li>
         <div class="input-text"><b class="pull-left">城市：</b><span>
-        <select name="city"  class="address-select" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
-            <option value="0">请选择</option>
-            <!-- {foreach from=$city_list.$sn item=city} -->
-            <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
-            <!-- {/foreach} -->
-          </select>
+        <select name="city" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
+          <option value="0">{$lang.please_select}{$name_of_region[2]}</option>
+          <!-- {foreach from=$city_list.$sn item=city} -->
+          <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+          <!-- {/foreach} -->
+        </select>
+      </div>
     </li>
     <li id="selDistricts_{$sn}_box" {if !$district_list.$sn}style="display:none"{/if}>
         <div class="input-text"><b class="pull-left">区/县：</b><span>
@@ -65,44 +53,17 @@
           >
       </div>
     </li>
-
       <li class="input-text"><b class="pull-left">{$lang.detailed_address}</b>
         <textarea name="address" placeholder="{$lang.detailed_address}{$lang.require_field}" type="text">{$consignee.address|escape}</textarea>
       </li>
-
-      <li onclick="slideshow('station');">
-          <div class="input-text"><b class="pull-left">顶鲜驿站：</b><span>
-          <div style="text-align: right; padding-right: 5%;" >
-            <input type="hidden" name="station_id" value="0">
-            <span id="station-name" style="right: 2em;"></span>
-            <i class="fa fa-angle-right fa-lg"></i>
-          </div>
-        </div>
-      </li>
     </ul>
   </div>
-
-
-
   <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
     <input type="submit" name="submit"  class="btn btn-info ect-bg-colory"  value="{$lang.add_address}"/>
     <input name="address_id" type="hidden" value="{$consignee.address_id}" />
   </div>
 </form>
 </div>
-<style>
-  .slide-station{font-size: 1.5rem; padding: 5px 5px; border: 1px solid #e0e0e0; margin: 5px 5px;}
-
-</style>
-<div class="slide-window edit-station-window">
-    <div class="slide-window-left" onclick="unslideshow('station');"></div>
-    <div class="slide-window-content">
-      <div class="slide-window-title"> 选择驿站</div>
-      <div class="slide-window-info">
-        加载中……
-      </div>
-    </div>
-  </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__PUBLIC__/script/region.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script> 
@@ -118,46 +79,6 @@
 	        document.forms['theForm'].reset();
 	      }
 	}
-  {/literal}
-  
-  function slideshow(type){
-    if(type==="station"){
-      var area_id = $("select[name='district']").val();
-      if(area_id == 0){
-        alert('请选择收货地址');
-        return false;
-      }
-      var html = '';
-      $.post("{:url('user/ajax_get_station')}",{area_id:area_id},function(data){
-        if(data.status){    
-          $.each(data.station,function(index,value){
-              html += "<div onclick='chosestation("+value.id+");' id='station-"+value.id+"' sname='"+value.name+"' class='slide-station'>"+value.name+":<small>"+value.address+"</small></div>";
-            });
-          $('.slide-window-info').html(html);
-        }else{
-          alert('该区域暂无可用驿站');
-        }
-
-      },"json");
-      $('.edit-station-window').css({'display':'block'});
-      $(".edit-station-window").animate({right:'0'});
-    }
-  }
-
-  function chosestation(id){
-    var name = $('#station-'+id).attr('sname');
-    $('input[name="station_id"]').val(id);
-    $('#station-name').html(name);
-    unslideshow('station');
-  }
-
-
-  function unslideshow(type){
-    if(type==="station"){
-      $(".edit-station-window").animate({right:'-105%'}, function(){
-        $('.edit-station-window').css({'display':'none'});
-      });
-    }
-  }
+	{/literal}
 </script>
 </body></html>

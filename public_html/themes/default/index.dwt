@@ -9,7 +9,8 @@
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 <link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 <style type="text/css">
-  .swiper-wrapper .swiper-pagination-bullet-active {background: #1CBB7F;}
+  .swiper-wrapper .swiper-pagination-bullet-active {background: #ec5151;}
+  .index-more{padding: 0;}
 </style>
 </head>
 <body>
@@ -86,7 +87,7 @@
 
 	<div class="index-more">
   	<div class="index-more-icon">
-      	<span>更多惊喜</span>
+      	<span>为你优选</span>
       </div>
       <ul class="index-more-list" id="J_ItemList">
         <div class="single_item"></div>

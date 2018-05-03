@@ -29,6 +29,7 @@ class RegionBaseModel extends BaseModel {
     public function get_regions($type = 0, $parent = 0) {
         $condition['region_type'] = $type;
         $condition['parent_id'] = $parent;
+        $condition['is_active'] = 1; // add by fjw in 18.5.3
         return $this->select($condition, 'region_id, region_name');
     }
 
