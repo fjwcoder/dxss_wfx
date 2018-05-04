@@ -6,7 +6,7 @@
     </nav>
   </div>
   <!-- {if $goods_list } -->
-  <p class="flow-price ect-padding-lr ect-padding-tb"> {$lang.total}<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p>
+  <!-- <p class="flow-price ect-padding-lr ect-padding-tb"> {$lang.total}<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p> -->
   <section class="ect-pro-list flow-pic ect-border-bottom0">
     <ul>
       <!-- {foreach from=$goods_list item=goods key=k} -->
@@ -50,13 +50,25 @@
     <p class="bg-warning text-center ect-padding-tb" onClick="location.href='{:url('flow/label_favourable')}'">{$lang.show_favourable}</p>
     <!-- {/if} -->
   </section>
+<style>
+  .flow-jiesuan{position: fixed; bottom: 0; width: 100%;}
+  .flow-price{width: 60%; float: left; background: transparent!important; font-size: 1.8rem; margin-top: 0.8rem;}
+  .ect-btn-info{width: 40%; float: right;}
+</style>
   <!-- {if $fittings_list} -->
-     <div class="two-btn flow-jiesuan ect-padding-tb ect-padding-lr text-center">
+  <div class="two-btn flow-jiesuan ect-padding-tb ect-padding-lr text-center">
    		<a class="btn btn-info" type="button" href="{:url('flow/goods_fittings')}">{$lang.goods_fittings}</a>
-        <a class="btn btn-info ect-bg-colory" type="button"  href="{:url('flow/checkout')}">{$lang.check_out}</a>
+      <a class="btn btn-info ect-bg-colory" type="button"  href="{:url('flow/checkout')}">{$lang.check_out}</a>
 	</div>
   <!-- {else} -->
-  	<div class="flow-jiesuan ect-padding-lr ect-padding-tb">
+  <div class="flow-jiesuan ect-padding-lr ect-padding-tb">
+
+      <div class="flow-price "> 
+        
+        总价：
+        <b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b>
+      </div>
+
   	<a href="{:url('flow/checkout')}" type="button" class="btn btn-info ect-btn-info ect-bg">{$lang.check_out}</a>
   </div>
   <!-- {/if} -->

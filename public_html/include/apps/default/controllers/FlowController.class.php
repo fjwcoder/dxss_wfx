@@ -27,14 +27,6 @@ class FlowController extends CommonController {
         // 属性赋值
         $this->user_id = $_SESSION['user_id'];
         $this->action = ACTION_NAME;
-        // // 验证登录
-        // $this->check_login();
-        // // 用户信息
-        // $info = model('ClipsBase')->get_user_default($this->user_id);
-        // // 如果是显示页面，对页面进行相应赋值
-        // assign_template();
-        // $this->assign('action', $this->action);
-        // $this->assign('info', $info);
     }
     /**
      * 购物车列表
@@ -48,7 +40,7 @@ class FlowController extends CommonController {
 
         // 取得商品列表，计算合计
         $cart_goods = model('Order')->get_cart_goods($this->user_id);
-
+// var_export($cart_goods); die;
         $this->assign('goods_list', $cart_goods ['goods_list']);
         $this->assign('total', $cart_goods ['total']);
 
@@ -82,9 +74,11 @@ class FlowController extends CommonController {
         $this->assign('show_goods_attribute', C('show_attr_in_cart'));
 
         // 取得购物车中基本件ID
-        $condition = "session_id = '" . SESS_ID . "' " . "AND rec_type = '" . CART_GENERAL_GOODS . "' " . "AND is_gift = 0 " . "AND extension_code <> 'package_buy' " . "AND parent_id = 0 ";
+        // $condition = "session_id = '" . SESS_ID . "' " . "AND rec_type = '" . CART_GENERAL_GOODS . "' " . "AND is_gift = 0 " . "AND extension_code <> 'package_buy' " . "AND parent_id = 0 ";
+        $condition = "user_id = '" . $this->user_id . "' " . "AND rec_type = '" . CART_GENERAL_GOODS . "' " . "AND is_gift = 0 " . "AND extension_code <> 'package_buy' " . "AND parent_id = 0 ";
         $parent_list = $this->model->table('cart')->field('goods_id')->where($condition)->getCol();
         //根据基本件id获取 购物车中商品配件列表
+        
         $fittings_list = model('Goods')->get_goods_fittings($parent_list);
         $this->assign('fittings_list', $fittings_list);
         $this->assign('currency_format', C('currency_format'));
